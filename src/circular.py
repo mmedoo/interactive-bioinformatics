@@ -20,8 +20,8 @@ total_gap = pi
 def isPointEndOfLine(point: Point3D, line: Line) -> bool:
 	return np.array_equal(point, line.get_end())
 
-def getPointFromAngle(angle):
-	return [r * cos(angle), r * sin(angle), 0]
+def getPointFromAngle(angle: float) -> Point3D:
+	return np.array([r * cos(angle), r * sin(angle), 0])
 
 def count_cycles(permutation):
 	seen = set()
@@ -35,7 +35,7 @@ def count_cycles(permutation):
 				current = permutation[current]
 	return cycles
 
-def runCircular(self, Initial: list, Target: list):
+def runCircular(self, Initial: list[str], Target: list[str]):
 
 	n = len(Target)
 	gap_angle = total_gap / n
@@ -83,9 +83,7 @@ def runCircular(self, Initial: list, Target: list):
 
 	self.play(*[Create(line) for line in temp])
 
-	type DictablePointType = tuple[float, float, float]
-
-	linesMap: dict[DictablePointType, Line] = {}
+	linesMap: dict[tuple[float, float, float], Line] = {}
 
 	temp = []
 	for j in range(n):
@@ -98,11 +96,13 @@ def runCircular(self, Initial: list, Target: list):
 
 	self.play(*[Create(line) for line in temp])
 
-	switchFirstDot: Annulus = None
-	switchSecondDot: Annulus = None
+	switchFirstDot: Annulus | None = None
+	switchSecondDot: Annulus | None = None
 
 	def switchEdges():
 		nonlocal switchFirstDot, switchSecondDot
+		assert switchFirstDot is not None
+		assert switchSecondDot is not None
 
 		p1 = switchFirstDot.get_center()
 		p2 = switchSecondDot.get_center()

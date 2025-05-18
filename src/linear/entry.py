@@ -1,9 +1,9 @@
 from manim import *
 from manim.opengl import *
-from interactivity_utils import *
+from ..utils.interactivity import *
 from .greedy import runGreedy
 from .breakpoint import runBps
- 
+
 def runLinear(self, init, target):
 
 	buttons = makeButtons(["Greedy", "Breakpoints"])
@@ -38,10 +38,8 @@ def runLinear(self, init, target):
 	
 	self.play(
 		*[
-			(
-				Write(label),
-				Create(box)
-			)
+			anim
 			for label, box in buttons
+			for anim in (Write(label), Create(box))
 		]
 	)

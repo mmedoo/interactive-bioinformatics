@@ -1,11 +1,11 @@
-from .utils import *
 from manim import *
-from public_utils import *
+from ..utils.public import *
+from ..utils.linear import *
 
 all_steps = []
 operations_count = 0
 
-def runGreedy(self, init, target):
+def runGreedy(self, init: list, target: list):
 	global operations_count
 	init_current = init.copy()
 	init_abs = init.copy()
@@ -36,7 +36,7 @@ def runGreedy(self, init, target):
 			run_time=0.25
 		)
 
-		init_current = reverseWithSign(init_current, i, target_index)
+		init_current = reverseWithSignForStr(init_current, i, target_index)
 
 		updated_step_text = getSeqObjects(init_current, step_pos)
 
@@ -56,13 +56,8 @@ def runGreedy(self, init, target):
 		init_abs = reverseWithoutSign(init_abs, i, target_index)
 
 		operations_count += 1
-
-		# dangerous
-		step_text.append(start_mark)
-		# dangerous
-		step_text.append(end_mark)
 		
-		all_steps.append(step_text)
+		all_steps.append([step_text + [start_mark, end_mark]])
 
 		i = (i + 1) % n
 

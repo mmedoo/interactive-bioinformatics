@@ -1,52 +1,48 @@
 from manim import *
+from manim.typing import Point3D
 
 gap_size = 1.5
 
-def removeFirstAndShifStepUp(self, all_steps):
-	self.play(
-		*[
-			letter.animate.shift(UP)
-			for step_text in all_steps
-			for letter in step_text
-		],
-		*[FadeOut(letter) for letter in all_steps[0]],
-		run_time=0.4
-	)
-
-def checkMaxLength(self, all_steps):
+def checkMaxLength(self, all_steps: list[list[Mobject]]):
 	if (len(all_steps) < 6):
 		return
-
-	removeFirstAndShifStepUp(self, all_steps)
+	self.play(
+		*[
+			mob.animate.shift(UP)
+			for step_mobs in all_steps
+			for mob in step_mobs
+		],
+		*[FadeOut(mob) for mob in all_steps[0]],
+		run_time=0.4
+	)
 	all_steps.pop(0)
 
-def getSeqObjects(seq, pos):
+def getSeqObjects(seq: list, pos: Point3D) -> list[Text]:
 	step_text = []
 	n = len(seq)
 	for j in range(n):
-		
 		letter = Text(str(seq[j]), font_size=55)
 		letter.move_to(pos + ( ( (n-2)/2 ) - j ) * LEFT * gap_size)
 		step_text.append(letter)
 
 	return step_text
 
-def putMarkOnRange(seqObject, start, end):
+def putMarkOnRange(seqObject: list[Text], start: int, end: int) -> tuple[Circle, Circle]:
 	start_position = seqObject[start].get_center() + gap_size * LEFT/2
-	sx_marker = Text("X", font_size=24, color=RED).move_to(start_position + UP * 0.3)
+	sx_marker = Circle(radius=0.1).set_fill(RED,opacity=1).move_to(start_position + UP * 0.3)
 
 	end_position = seqObject[end].get_center() + gap_size * RIGHT/2
-	fx_marker = Text("X", font_size=24, color=RED).move_to(end_position + UP * 0.3)
+	fx_marker = Circle(radius=0.1).set_fill(RED,opacity=1).move_to(end_position + UP * 0.3)
 	
 	return sx_marker, fx_marker
 
-def putMarkOnBetweenIndices(seqObject, left, right):
-	pos = seqObject[left].get_center() + gap_size * RIGHT/2
+def putMarkOnBlockRight(mobject: Mobject) -> Circle:
+	pos = mobject.get_center() + gap_size * RIGHT/2
 	# marker = Text("X", font_size=24, color=RED).move_to(pos + UP * 0.3)
 	marker = Circle(radius=0.15).set_fill(RED,opacity=0.7).move_to(pos + UP * 0.3)
 	return marker
 
-def getBreakPointsIndices(seq, target):
+def getBreakPointsIndices(seq: list, target: list) -> list[int]:
 	indices = []
 	n = len(seq)
 	for i in range(n-1):
