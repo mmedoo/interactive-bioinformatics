@@ -30,7 +30,7 @@ def handleKeyPress(self, symbol, modifiers):
 			self.displayError("Empty input")
 			return
 
-		valid = self.inputChecker()
+		valid = self.submitChecker()
 		if not valid:
 			return
 		self.inputs_mobjects.append(self.temp_input_mobject.copy())
@@ -44,6 +44,10 @@ def handleKeyPress(self, symbol, modifiers):
 	str = check_if_char(symbol)
 	if not str:
 		self.displayError("Invalid character")
+		return
+		
+	valid = self.inputChecker(str)
+	if not valid:
 		return
 
 	if (len(self.current_input) + 1) > self.max_input_len:

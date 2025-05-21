@@ -1,11 +1,13 @@
 from manim import *
-from manim.typing import Point3D
+from manim.typing import Point3DLike, Point3D
 from math import sin, cos, pi
+from collections.abc import Sequence
 
-r = 2.5
+r = 2.15
 clockwise = True
 dot_radius = 0.1225
-label_distance_from_center = 1.1
+label_gap = 0.25
+label_distance_from_center = r + label_gap
 label_font_size = 36
 run_time = 0.7
 
@@ -17,11 +19,11 @@ target_lines_color = BLUE_C
 dir = -1 if clockwise else 1
 total_gap = pi
 
-def isPointEndOfLine(point: Point3D, line: Line) -> bool:
+def isPointEndOfLine(point: Point3DLike, line: Line) -> bool:
 	return np.array_equal(point, line.get_end())
 
-def getPointFromAngle(angle: float) -> Point3D:
-	return np.array([r * cos(angle), r * sin(angle), 0])
+def getPointFromAngle(angle: float, radius = r) -> Point3DLike:
+	return np.array([radius * cos(angle), radius * sin(angle) + config.frame_height/2 - r - 3*label_gap, 0])
 
 def count_cycles(permutation):
 	seen = set()
@@ -35,7 +37,24 @@ def count_cycles(permutation):
 				current = permutation[current]
 	return cycles
 
+
+def addCircleToTheSide(self, step, order):
+	origin = VGroup(*[mob.copy() for mob in step])
+	scale_down = 0.4
+	gap = scale_down*r*10
+	newStep = origin.copy().scale(scale_down).to_edge(DOWN + LEFT * (gap * order + 1), buff=0.25)
+	self.add(origin)
+	self.play(
+		Transform(
+			origin,
+			newStep
+		),
+		run_time=0.75
+	)
+
+
 def runCircular(self, Initial: list[str], Target: list[str]):
+	no = 0
 
 	n = len(Target)
 	gap_angle = total_gap / n
@@ -45,9 +64,11 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 	starts: list[Annulus] = []
 	ends: list[Annulus] = []
 
-	startsMap: dict[str, Point3D] = {}
-	endsMap: dict[str, Point3D] = {}
+	startsMap: dict[str, Point3DLike] = {}
+	endsMap: dict[str, Point3DLike] = {}
 	
+	step_mobs: Sequence[Mobject] = []
+
 	for j in range(n):
 		st_angle = begin_angle + j * (block_angle + gap_angle) * dir
 		st_point = getPointFromAngle(st_angle)
@@ -57,10 +78,9 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		ed_point = getPointFromAngle(ed_angle)
 		ed_dot = Annulus(inner_radius=0, outer_radius=dot_radius, color=end_dot_color).move_to(ed_point)
 
-		segment = ArcBetweenPoints(st_point, ed_point, radius=r * dir, color=GREEN_C)
+		label = Text(f"{Target[j]}", font_size=label_font_size).move_to(getPointFromAngle((st_angle + ed_angle) / 2, radius=label_distance_from_center))
 
-		label_position = segment.get_center() * label_distance_from_center
-		label = Text(f"{Target[j]}", font_size=label_font_size).move_to(label_position)
+		step_mobs.append(label)
 
 		starts.append(st_dot)
 		ends.append(ed_dot)
@@ -74,6 +94,8 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 			run_time=run_time
 		)
 
+	step_mobs += starts + ends
+
 	temp = []
 	for j in range(n):
 		st_point = endsMap[Target[j]]
@@ -83,7 +105,9 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 
 	self.play(*[Create(line) for line in temp])
 
-	linesMap: dict[tuple[float, float, float], Line] = {}
+	step_mobs += temp
+
+	linesMap: dict[Point3DLike, Line] = {}
 
 	temp = []
 	for j in range(n):
@@ -96,11 +120,16 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 
 	self.play(*[Create(line) for line in temp])
 
+	step_mobs += temp
+
+	addCircleToTheSide(self, step_mobs, no)
+	no += 1
+
 	switchFirstDot: Annulus | None = None
 	switchSecondDot: Annulus | None = None
 
 	def switchEdges():
-		nonlocal switchFirstDot, switchSecondDot
+		nonlocal switchFirstDot, switchSecondDot, n, no
 		assert switchFirstDot is not None
 		assert switchSecondDot is not None
 
@@ -117,7 +146,7 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 
 		if line1 == line2:
 			return
-		
+
 		p1_is_line1_end: bool = isPointEndOfLine(p1, line1)
 		p2_is_line2_end: bool = isPointEndOfLine(p2, line2)
 
@@ -135,6 +164,9 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 
 		linesMap[tuple(p1)] = line2
 		linesMap[tuple(p2)] = line1
+
+		addCircleToTheSide(self, step_mobs, no)
+		no += 1
 	
 	def addPointToSwitch(dot: Annulus):
 		nonlocal switchFirstDot, switchSecondDot

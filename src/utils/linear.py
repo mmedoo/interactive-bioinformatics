@@ -1,7 +1,7 @@
 from manim import *
 from manim.typing import Point3D
 
-gap_size = 1.5
+gap_size = 1.25
 
 def checkMaxLength(self, all_steps: list[list[Mobject]]):
 	if (len(all_steps) < 6):
@@ -17,17 +17,17 @@ def checkMaxLength(self, all_steps: list[list[Mobject]]):
 	)
 	all_steps.pop(0)
 
-def getSeqObjects(seq: list, pos: Point3D) -> list[Text]:
-	step_text = []
+def getSeqObjects(seq: list, pos: Point3D) -> VGroup:
+	step_text = VGroup()
 	n = len(seq)
 	for j in range(n):
 		letter = Text(str(seq[j]), font_size=55)
 		letter.move_to(pos + ( ( (n-2)/2 ) - j ) * LEFT * gap_size)
-		step_text.append(letter)
+		step_text.add(letter)
 
 	return step_text
 
-def putMarkOnRange(seqObject: list[Text], start: int, end: int) -> tuple[Circle, Circle]:
+def putMarkOnRange(seqObject: VGroup, start: int, end: int) -> tuple[Circle, Circle]:
 	start_position = seqObject[start].get_center() + gap_size * LEFT/2
 	sx_marker = Circle(radius=0.1).set_fill(RED,opacity=1).move_to(start_position + UP * 0.3)
 
@@ -39,7 +39,7 @@ def putMarkOnRange(seqObject: list[Text], start: int, end: int) -> tuple[Circle,
 def putMarkOnBlockRight(mobject: Mobject) -> Circle:
 	pos = mobject.get_center() + gap_size * RIGHT/2
 	# marker = Text("X", font_size=24, color=RED).move_to(pos + UP * 0.3)
-	marker = Circle(radius=0.15).set_fill(RED,opacity=0.7).move_to(pos + UP * 0.3)
+	marker = Circle(radius=0.125).set_fill(RED,opacity=0.7).move_to(pos + UP * 0.3)
 	return marker
 
 def getBreakPointsIndices(seq: list, target: list) -> list[int]:
@@ -51,3 +51,16 @@ def getBreakPointsIndices(seq: list, target: list) -> list[int]:
 		if next - curr != 1:
 			indices.append(i)
 	return indices
+
+def addStepToTheSide(self, step, order):
+	origin = VGroup(*[mob.copy() for mob in step])
+	newStep = origin.copy().scale(0.5).to_edge(RIGHT + DOWN * (order + 1),buff=0.5)
+	self.add(origin)
+	self.play(
+		Transform(
+			origin,
+			newStep
+		),
+		run_time=0.75
+	)
+

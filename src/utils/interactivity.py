@@ -92,8 +92,15 @@ def makeClickable(self, obj: Mobject, handler: Callable):
 	self.onClickHandlers[obj] = handler
 
 
+def makeButtonMobs(buttonLabel: str) -> VGroup:
+	label = Text(buttonLabel, font_size=42, color=WHITE)
+	box = Rectangle(
+		width=label.width + 0.5,  # Add padding to the width
+		height=label.height + 0.3,  # Add padding to the height
+	).set_stroke(WHITE, width=0).move_to(label.get_center())
+	return VGroup(label, box)
 
-def makeButtons(buttonLabels: list[str]) -> list[tuple[Text, Rectangle]]:
+def makeOptions(buttonLabels: list[str]) -> list[tuple[Text, Rectangle]]:
 	"""
 	Creates a list of button objects, each consisting of a text label and a surrounding rectangle.
 	Args:
@@ -110,13 +117,8 @@ def makeButtons(buttonLabels: list[str]) -> list[tuple[Text, Rectangle]]:
 
 		pos = j * (n / (n-1)) - (n / 2)
 
-		label = Text(buttonLabel, font_size=42, color=WHITE).move_to(ORIGIN).move_to(pos * RIGHT * 2.5)
-		
-		box = Rectangle(
-			width=label.width + 0.5,  # Add padding to the width
-			height=label.height + 0.3,  # Add padding to the height
-		).set_stroke(WHITE, width=0).move_to(label.get_center())
-		
+		[label, box] = makeButtonMobs(buttonLabel).move_to(ORIGIN + pos * RIGHT * 2.5)
+
 		objects.append([label, box])
 
 	return objects

@@ -1,51 +1,91 @@
 from ..utils.linear import *
-from ..utils.public import reverseWithSignForInts
+from ..utils.public import reverseWithSignForInts, reverseWithSignForStr
 
-def Find_Breakpoints(p: list[int]) -> list[int]:
-	return [i for i in range(len(p) - 1) if p[i + 1] - p[i] != 1]
+def orderBlocks(p: list, t: list) -> list:
+	n = len(p)
+	init = []
+
+	for block in p:
+		init.append(-t.index(block[1]) if block.startswith('-') else t.index(block))
+
+	return init
+
+def Find_Breakpoints(p: list, t: list) -> list[int]:
+	init = orderBlocks(p, t)
+	
+	n = len(p)
+	bps = []
+
+	for i in range(n-1):
+		if (init[i+1] - init[i]) != 1:
+			bps.append(i)
+
+	return bps
 
 def runBps(self, init, target):
-	init = [int(x) for x in init]
-	target = [int(x) for x in target]
+	# init = [int(x) for x in init]
+	# target = [int(x) for x in target]
+
+	operations_count = 0
 
 	init_current = init.copy()
 	markers: list[Circle] = []
 	bps_no: Text | None = None
 
-	smallest = min(target)
-	largest = max(target)
-	init_current = [smallest - 1] + init + [largest + 1]
-	target = [smallest - 1] + target + [largest + 1]
+	# smallest = min(target)
+	# largest = max(target)
+	init_current = ['0'] + init + [f"{len(init)}"]
+	target = ['0'] + target + [f"{len(init)}"]
 
-	step_text = getSeqObjects(init_current, ORIGIN)
+	step_text = getSeqObjects(init_current, ORIGIN).to_edge(LEFT, buff=1)
 	
 	step_text[0].set_color(GREY)
 	step_text[-1].set_color(GREY)
 
 	self.play(*[Write(text) for text in step_text], run_time=0.5)
 
+	addStepToTheSide(self, step_text[1:-1], operations_count)
+
 	def applyReversal(start: int, end: int):
-		nonlocal init_current
+		nonlocal init_current, operations_count, markers, step_text
 
 		if start > end:
 			start, end = end, start
 
-		init_current = reverseWithSignForInts(init_current, start+1, end)
+		init_current = reverseWithSignForStr(init_current, start+1, end)
 
-		updated_text = getSeqObjects(init_current, ORIGIN)
+		updated_text = getSeqObjects(init_current, ORIGIN).move_to(step_text)
+		
+		for j in range(start+1, end+1):
+			updated_text[j].set_color(GREY)
+		
+		updated_text[0].set_color(GREY)
+		updated_text[-1].set_color(GREY)
+		
 		self.play(
-			*[Transform(step_text[j], updated_text[j]) for j in range(1, len(init_current)-1)],
+			*[
+				Transform(step_text[j], updated_text[j])
+				for j in range(1, len(init_current)-1)
+			],
 			run_time=0.5
 		)
+
+		for m in markers:
+			self.buttons.remove(m)
+			self.remove(m)
+
+		operations_count += 1
+
+		addStepToTheSide(self, step_text[1:-1], operations_count)
+
+		step_text[1:-1].set_color(WHITE)
 
 	def updateMarkers():
 		nonlocal markers
 
-		self.remove(*[m for m in markers])
-		self.buttons = []
 		markers = []
 		
-		bps_indices = Find_Breakpoints(init_current)
+		bps_indices = Find_Breakpoints(init_current, target)
 
 		if len(bps_indices) == 0:
 			update_bps_number(len(bps_indices))
@@ -78,7 +118,7 @@ def runBps(self, init, target):
 
 	def update_bps_number(no):
 		nonlocal bps_no
-		bps_no_text = Text(f"Breaks: {no}", font_size=46).to_edge(DOWN, buff=0.5)
+		bps_no_text = Text(f"Breaks: {no}", font_size=46).to_edge(DOWN + LEFT, buff=0.5)
 		if bps_no is not None:
 			# self.play(Transform(bps_no, bps_no_text), run_time=0.5)
 			self.remove(bps_no)

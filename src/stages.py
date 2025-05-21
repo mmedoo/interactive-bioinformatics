@@ -1,7 +1,8 @@
 from manim import *
 from .circular import runCircular
-from .utils.interactivity import makeButtons
+from .utils.interactivity import makeOptions
 from .linear.entry import runLinear
+from .utils.interactivity import makeButtonMobs
 
 run_time = 0.5
 
@@ -11,15 +12,24 @@ def stage_1(self):
 def stage_2(self):
 	self.add(self.inputs_mobjects[0])
 	self.max_input_len = len(self.input_history[0])
-	def inputChecker():
+	
+	def submitChecker():
 		fseq = self.input_history[0]
 		seq = self.current_input
-		for char in seq:
-			if char not in fseq:
-				self.displayError("Both Sequences should have same characters")
-				return False
+		if len(seq) != len(fseq):
+			self.displayError("Both Sequences should have same length")
+			return False
+		return True
+	self.submitChecker = submitChecker
+
+	def inputChecker(str):
+		fseq = self.input_history[0]
+		if str not in fseq:
+			self.displayError("Both Sequences should have same characters")
+			return False
 		return True
 	self.inputChecker = inputChecker
+
 	self.take_input("Target Sequence:", 2*UP + 4*LEFT)
 
 def stage_3(self):
@@ -30,7 +40,17 @@ def stage_3(self):
 		run_time=run_time
 	)
 
-	buttons = makeButtons(["Linear", "Circular"])
+	self.remove(*self.labels_mobjects)
+
+	[label, box] = makeButtonMobs("Reset").next_to(self.inputs_mobjects[0], DOWN).scale(0.75).to_edge(LEFT, buff=0.25)
+	self.makeClickable(box, lambda x: self.resetAll())
+	self.add(box, label)
+
+	[label, box] = makeButtonMobs("Back").next_to(box, DOWN).scale(0.75).to_edge(LEFT, buff=0.25)
+	self.makeClickable(box, lambda x: self.resetAndKeepSeqs())
+	self.add(box, label)
+
+	buttons = makeOptions(["Linear", "Circular"])
 
 	[
 		[_, linearBox],
@@ -42,16 +62,11 @@ def stage_3(self):
 	self.add(*[box for _, box in buttons])
 
 	def removeOptions():
-		self.buttons = []
+		self.buttons.remove(linearBox)
+		self.buttons.remove(circularBox)
 		self.remove(
-			*[
-				label
-				for label, _ in buttons
-			],
-			*[
-				box
-				for _, box in buttons
-			]
+			*[label for label, _ in buttons],
+			*[box for _, box in buttons]
 		)
 
 	self.makeClickable(linearBox, lambda x: (

@@ -22,6 +22,7 @@ def reverseWithoutSign(p: list[str], start: int, end: int) -> list[str]:
 def check_if_char(symbol) -> str | Literal[False]:
 	if symbol in (keys.NUM_0, keys.NUM_1, keys.NUM_2, keys.NUM_3, keys.NUM_4, keys.NUM_5, keys.NUM_6, keys.NUM_7, keys.NUM_8, keys.NUM_9):
 		return str(symbol - keys.NUM_0)
+	# if chr(symbol).isalnum() or chr(symbol) == '-':
 	if chr(symbol).isalnum():
 		return str(chr(symbol).upper())
 	return False

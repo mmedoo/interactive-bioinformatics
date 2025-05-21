@@ -1,7 +1,7 @@
 from manim import *
 from manim.opengl import *
 from manim.typing import Point3D
-from typing import Callable
+from typing import Callable, Any
 from src.events import *
 from src.utils.interactivity import *
 from src.stages import stages
@@ -11,7 +11,8 @@ run_time = 0.5
 
 class Run(Scene):
 	error_message: Text = Text("")
-	inputChecker: Callable[[], bool] = lambda x = None: True
+	submitChecker: Callable[[], bool] = lambda x = None: True
+	inputChecker: Callable[[Any, str], bool] = lambda x, y = None: True
 	input_position: Point3D
 	input_history: list[list[str]] = []
 	accept_input: bool = False
@@ -50,7 +51,7 @@ class Run(Scene):
 		self.remove(self.message_to_user)
 	
 	def displayError(self, text):
-		self.error_message = Text(text, color=RED, font_size=48).to_edge(DOWN, buff=1.5).shift(DOWN * 0.5)
+		self.error_message = Text(text, color=RED, font_size=40).to_edge(DOWN, buff=1.5).shift(DOWN * 0.5)
 		self.add(self.error_message)
 
 	def removeError(self):
@@ -59,3 +60,29 @@ class Run(Scene):
 	def play_next_stage(self):
 		stages[self.current_stage](self)
 		self.current_stage += 1
+	
+	def resetAll(self):
+		self.clear()
+		self.buttons = []
+		self.current_stage = 0
+		self.input_history = []
+		self.current_input = []
+		self.submitChecker = lambda x = None: True
+		self.inputChecker = lambda x, y = None: True
+		self.labels_mobjects = []
+		self.inputs_mobjects = []
+		self.onClickHandlers = {}
+		self.onHoverHandlers = {}
+		self.max_input_len = 10
+		self.play_next_stage()
+
+	def resetAndKeepSeqs(self):
+		self.buttons = []
+		self.clear()
+		self.labels_mobjects = []
+		self.add(
+			self.inputs_mobjects[0],
+			self.inputs_mobjects[1]
+		)
+		self.current_stage = 2
+		self.play_next_stage()

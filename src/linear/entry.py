@@ -6,7 +6,7 @@ from .breakpoint import runBps
 
 def runLinear(self, init, target):
 
-	buttons = makeButtons(["Greedy", "Breakpoints"])
+	buttons = makeOptions(["Greedy", "Breakpoints"])
 
 	[
 		[_, greedyBox],
@@ -14,7 +14,8 @@ def runLinear(self, init, target):
 	] = buttons
 
 	def removeButtons():
-		self.buttons = []
+		self.buttons.remove(greedyBox)
+		self.buttons.remove(bpBox)
 		self.remove(
 			*[
 				label
