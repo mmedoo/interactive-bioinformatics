@@ -35,16 +35,9 @@ This repository provides an interactive **sequence transformation visualizer** b
    ```
 
 2. Create and activate a virtual environment:
-
-   - **On Linux/macOS:**
-     ```bash
-     python3 -m venv venv
-     ```
-
-   - **On Windows:**
-     ```bash
-     python -m venv venv
-     ```
+   ```bash
+   python3 -m venv venv
+   ```
 
 3. Install dependencies:
    ```bash
@@ -55,9 +48,16 @@ This repository provides an interactive **sequence transformation visualizer** b
 ## 🚀 Usage
 
 Run the main script to start the app:
-```bash
-venv/bin/manim -p -qm --renderer=opengl main.py Run
-```
+- **On Linux/macOS:**
+   ```bash
+   venv/bin/manim -p -qm --renderer=opengl main.py Run
+   ```
+
+- **On Windows:**
+  ```bash
+  venv\Scripts\manim.exe -p -qm --renderer=opengl main.py Run
+  ```
+
 
 ## 🛠️ Workflow
 
