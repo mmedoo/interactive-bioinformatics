@@ -40,9 +40,18 @@ This repository provides an interactive **sequence transformation visualizer** b
    ```
 
 3. Install dependencies:
-   ```bash
-   pip install -r reqs.txt
-   ```
+
+   - **On Linux/macOS:**
+      ```bash
+      source venv/bin/activate
+      pip install -r reqs.txt
+      ```
+
+   - **On Windows:**
+      ```bash
+      venv\Scripts\activate
+      pip install -r reqs.txt
+      ```
 ---
 
 ## 🚀 Usage
