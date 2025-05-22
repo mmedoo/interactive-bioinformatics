@@ -34,8 +34,8 @@ def runBps(self, init, target):
 
 	# smallest = min(target)
 	# largest = max(target)
-	init_current = ['0'] + init + [f"{len(init)}"]
-	target = ['0'] + target + [f"{len(init)}"]
+	init_current = ['0'] + init + [f"{len(init)+1}"]
+	target = ['0'] + target + [f"{len(init)+1}"]
 
 	step_text = getSeqObjects(init_current, ORIGIN).to_edge(LEFT, buff=1)
 	

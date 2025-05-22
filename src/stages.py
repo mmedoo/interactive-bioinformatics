@@ -7,6 +7,23 @@ from .utils.interactivity import makeButtonMobs
 run_time = 0.5
 
 def stage_1(self):
+	def inputChecker(incoming):
+		if len(self.current_input) == 0:
+			return True
+
+		seq = self.current_input
+
+		is_prev_digit = seq[0].isdigit()
+		is_prev_alpha = seq[0].isalpha()
+
+		if (is_prev_digit and not incoming.isdigit()) or (is_prev_alpha and not incoming.isalpha()):
+			self.displayError("Input must be all digits or all letters")
+			return False
+
+		return True
+		
+	self.inputChecker = inputChecker
+
 	self.take_input("Initial Sequence:", 3*UP + 4*LEFT)
 
 def stage_2(self):
@@ -17,7 +34,7 @@ def stage_2(self):
 		fseq = self.input_history[0]
 		seq = self.current_input
 		if len(seq) != len(fseq):
-			self.displayError("Both Sequences should have same length")
+			self.displayError("Both Sequences should have the same length")
 			return False
 		return True
 	self.submitChecker = submitChecker
@@ -25,7 +42,7 @@ def stage_2(self):
 	def inputChecker(str):
 		fseq = self.input_history[0]
 		if str not in fseq:
-			self.displayError("Both Sequences should have same characters")
+			self.displayError("Both Sequences should have the same characters")
 			return False
 		return True
 	self.inputChecker = inputChecker

@@ -1,10 +1,10 @@
-# Sequence Transformation Visualizer
+# 🧬 Sequence Transformation Visualizer
 
 This repository provides an interactive **sequence transformation visualizer** built with **Manim Community Edition**. It is designed to help users understand and visualize sequence transformations through both **linear** and **circular** operations. The tool is ideal for educational purposes, algorithm demonstrations, and debugging sequence-based problems.
 
 ---
 
-## Features
+## ✨ Features
 
 - **Interactive Input**:
   - Input initial and target sequences interactively.
@@ -22,11 +22,11 @@ This repository provides an interactive **sequence transformation visualizer** b
 
 ---
 
-## Prerequisites
+## ⚙️ Prerequisites
 
 - Python 3.10+
 
-## Installation
+## 📦 Installation
 
 1. Clone the repository:
    ```bash
@@ -39,13 +39,11 @@ This repository provides an interactive **sequence transformation visualizer** b
    - **On Linux/macOS:**
      ```bash
      python3 -m venv venv
-     source venv/bin/activate
      ```
 
    - **On Windows:**
      ```bash
      python -m venv venv
-     venv\Scripts\activate
      ```
 
 3. Install dependencies:
@@ -54,14 +52,14 @@ This repository provides an interactive **sequence transformation visualizer** b
    ```
 ---
 
-## Usage
+## 🚀 Usage
 
 Run the main script to start the app:
 ```bash
-manim -p -qm --renderer=opengl main.py Run 
+venv/bin/manim -p -qm --renderer=opengl main.py Run
 ```
 
-## Workflow
+## 🛠️ Workflow
 
 1. **Stage 1**: Input the initial sequence.
 2. **Stage 2**: Input the target sequence.
@@ -73,7 +71,7 @@ manim -p -qm --renderer=opengl main.py Run
 
 ---
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 ├── src/                   # Source code
@@ -92,7 +90,7 @@ manim -p -qm --renderer=opengl main.py Run
 
 ---
 
-## Planned Features
+## 🔮 Planned Features
 
 - [ ] Support for negative block enterance.
 - [ ] Cycle counting in circular mode.
@@ -100,7 +98,7 @@ manim -p -qm --renderer=opengl main.py Run
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Follow these steps to contribute:
 
@@ -121,7 +119,7 @@ Contributions are welcome! Follow these steps to contribute:
 
 ---
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
