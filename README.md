@@ -54,7 +54,14 @@ This repository provides an interactive **sequence transformation visualizer** b
       
       You may encounter this error:
       ```bash
-      <!-- error here -->
+      venv/Scripts/activate : File path\to\folder\venv\Scripts\Activate.ps1
+      cannot be loaded because running scripts is disabled on this system. For more information, see
+      about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+      At line:1 char:1
+      + venv/Scripts/activate
+      + ~~~~~~~~~~~~~~~~~~~~~
+          + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+          + FullyQualifiedErrorId : UnauthorizedAccess
       ```
 
       Run the following in an administrator PowerShell to allow virtual environment activation:
