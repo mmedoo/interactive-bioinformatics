@@ -6,9 +6,6 @@ from src.events import *
 from src.utils.interactivity import *
 from src.stages import stages
 
-# constants
-run_time = 0.5
-
 class Run(Scene):
 	error_message: Text = Text("")
 	submitChecker: Callable[[], bool] = lambda x = None: True

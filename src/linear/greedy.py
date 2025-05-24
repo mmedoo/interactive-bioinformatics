@@ -1,6 +1,7 @@
 from manim import *
 from ..utils.public import *
 from ..utils.linear import *
+from ..config import run_time
 
 all_steps = []
 operations_count = 0
@@ -15,7 +16,7 @@ def runGreedy(self, init: list, target: list):
 
 	step_text = getSeqObjects(init_current, ORIGIN).to_edge(LEFT, buff=1)
 
-	self.play(*[Write(text) for text in step_text], run_time=0.5)
+	self.play(*[Write(text) for text in step_text], run_time=run_time)
 
 	addStepToTheSide(self, step_text, 0)
 
@@ -34,7 +35,7 @@ def runGreedy(self, init: list, target: list):
 		self.play(
 			Write(start_mark),
 			Write(end_mark),
-			run_time=0.25
+			run_time=run_time
 		)
 
 		init_current = reverseWithSignForStr(init_current, i, target_index)
@@ -54,7 +55,7 @@ def runGreedy(self, init: list, target: list):
 			],
 			FadeOut(start_mark),
 			FadeOut(end_mark),
-			run_time=0.5
+			run_time=run_time
 		)
 
 		init_abs = reverseWithoutSign(init_abs, i, target_index)
@@ -70,4 +71,4 @@ def runGreedy(self, init: list, target: list):
 
 	print("success")
 	operations_text = Text(f"Operations: {operations_count}", font_size=46).to_edge(LEFT + DOWN)
-	self.play(Write(operations_text), run_time=0.5)
+	self.play(Write(operations_text), run_time=run_time)

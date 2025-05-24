@@ -3,8 +3,7 @@ from .circular import runCircular
 from .utils.interactivity import makeOptions
 from .linear.entry import runLinear
 from .utils.interactivity import makeButtonMobs
-
-run_time = 0.5
+from .config import run_time
 
 def stage_1(self):
 	def inputChecker(incoming):
@@ -75,7 +74,7 @@ def stage_3(self):
 	] = buttons
 
 
-	self.play(*[ Write(label) for label, _ in buttons])
+	self.play(*[ Write(label) for label, _ in buttons], run_time=run_time)
 	self.add(*[box for _, box in buttons])
 
 	def removeOptions():

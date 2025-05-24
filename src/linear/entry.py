@@ -3,6 +3,7 @@ from manim.opengl import *
 from ..utils.interactivity import *
 from .greedy import runGreedy
 from .breakpoint import runBps
+from ..config import run_time
 
 def runLinear(self, init, target):
 
@@ -42,5 +43,6 @@ def runLinear(self, init, target):
 			anim
 			for label, box in buttons
 			for anim in (Write(label), Create(box))
-		]
+		],
+		run_time=run_time
 	)

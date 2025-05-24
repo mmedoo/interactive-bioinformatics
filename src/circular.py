@@ -2,6 +2,7 @@ from manim import *
 from manim.typing import Point3DLike, Point3D
 from math import sin, cos, pi
 from collections.abc import Sequence
+from .config import run_time
 
 r = 2.15
 clockwise = True
@@ -9,7 +10,6 @@ dot_radius = 0.1225
 label_gap = 0.25
 label_distance_from_center = r + label_gap
 label_font_size = 36
-run_time = 0.7
 
 start_dot_color = GREEN
 end_dot_color = GREEN
@@ -49,7 +49,7 @@ def addCircleToTheSide(self, step, order):
 			origin,
 			newStep
 		),
-		run_time=0.75
+		run_time=run_time
 	)
 
 
@@ -103,7 +103,7 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		line = ArcBetweenPoints(st_point, ed_point, radius=r * dir, color=target_lines_color)
 		temp.append(line)
 
-	self.play(*[Create(line) for line in temp])
+	self.play(*[Create(line) for line in temp], run_time=run_time)
 
 	step_mobs += temp
 
@@ -118,7 +118,7 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		linesMap[tuple(st_point)] = line
 		linesMap[tuple(ed_point)] = line
 
-	self.play(*[Create(line) for line in temp])
+	self.play(*[Create(line) for line in temp], run_time=run_time)
 
 	step_mobs += temp
 

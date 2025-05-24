@@ -1,5 +1,6 @@
 from manim import *
 from manim.typing import Point3D
+from ..config import run_time
 
 gap_size = 1.25
 
@@ -13,7 +14,7 @@ def checkMaxLength(self, all_steps: list[list[Mobject]]):
 			for mob in step_mobs
 		],
 		*[FadeOut(mob) for mob in all_steps[0]],
-		run_time=0.4
+		run_time=run_time
 	)
 	all_steps.pop(0)
 
@@ -61,6 +62,6 @@ def addStepToTheSide(self, step, order):
 			origin,
 			newStep
 		),
-		run_time=0.75
+		run_time=run_time
 	)
 

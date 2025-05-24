@@ -46,13 +46,28 @@ This repository provides an interactive **sequence transformation visualizer** b
       source venv/bin/activate
       pip install -r reqs.txt
       ```
-
-   - **On Windows:**
+   - **On Windows:**  
       ```bash
       venv\Scripts\activate
       pip install -r reqs.txt
       ```
----
+      
+      You may encounter this error:
+      ```bash
+      <!-- error here -->
+      ```
+
+      Run the following in an administrator PowerShell to allow virtual environment activation:
+
+      ```powershell
+      Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+      ```
+
+      then run these commands again:
+      ```bash
+      venv\Scripts\activate
+      pip install -r reqs.txt
+      ```
 
 ## 🚀 Usage
 

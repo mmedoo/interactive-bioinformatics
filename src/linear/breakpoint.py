@@ -1,5 +1,6 @@
 from ..utils.linear import *
 from ..utils.public import reverseWithSignForInts, reverseWithSignForStr
+from ..config import run_time
 
 def orderBlocks(p: list, t: list) -> list:
 	n = len(p)
@@ -42,7 +43,7 @@ def runBps(self, init, target):
 	step_text[0].set_color(GREY)
 	step_text[-1].set_color(GREY)
 
-	self.play(*[Write(text) for text in step_text], run_time=0.5)
+	self.play(*[Write(text) for text in step_text], run_time=run_time)
 
 	addStepToTheSide(self, step_text[1:-1], operations_count)
 
@@ -67,7 +68,7 @@ def runBps(self, init, target):
 				Transform(step_text[j], updated_text[j])
 				for j in range(1, len(init_current)-1)
 			],
-			run_time=0.5
+			run_time=run_time
 		)
 
 		for m in markers:
@@ -113,7 +114,7 @@ def runBps(self, init, target):
 			markers.append(marker)
 			self.makeClickable(marker, lambda x, idx=index: fixMarker(x, idx))
 
-		self.play(*[Write(m) for m in markers], run_time=0.5)
+		self.play(*[Write(m) for m in markers], run_time=run_time)
 		update_bps_number(len(bps_indices))
 
 	def update_bps_number(no):
