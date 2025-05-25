@@ -81,15 +81,28 @@ This repository provides an interactive **sequence transformation visualizer** b
 Run the main script to start the app:
 - **On Linux/macOS:**
    ```bash
-   venv/bin/manim -p -qm --renderer=opengl main.py Run
+   venv/bin/manim -p -qh --fullscreen --renderer=opengl main.py Run
    ```
 
 - **On Windows:**
-  ```bash
+   ```bash
    venv\Scripts\activate
-   manim -p -qm --renderer=opengl main.py Run
-  ```
+   manim -p -qh --fullscreen --renderer=opengl main.py Run
+   ```
 
+You can change render quality to your preference by setting the `-qh` parameter:
+
+|Parameter|Resolution|Frames per second|
+|-----|----------|-|
+|`-ql`| 854x480 | `15fps` |
+|`-qm`| 1280x720 | `30fps` |
+|`-qh`| 1920x1080 | `60fps` |
+|`-qp`| 2560x1440 | `60fps` |
+|`-qk`| 3840x2160 | `60fps` |
+
+Increase fps for smoother animation.
+
+Try reducing quality if having performance issues.
 
 ## 🛠️ Workflow
 
