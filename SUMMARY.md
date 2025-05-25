@@ -1,0 +1,15 @@
+# Table of contents
+
+* [Table of Contents](README.md)
+* [Introduction](introduction.md)
+* [Project Overview](project-overview.md)
+* [System Design](system-design.md)
+* [System Requirements](system-requirements.md)
+* [User Guide](user-guide/README.md)
+  * [Installation](user-guide/installation.md)
+  * [Onboarding](user-guide/onboarding.md)
+  * [Linear Representation](user-guide/linear-representation/README.md)
+    * [Breakpoint Algorithm](user-guide/linear-representation/breakpoint-algorithm.md)
+    * [Greedy Algorithm](user-guide/linear-representation/greedy-algorithm.md)
+  * [Circular Representation](user-guide/circular-representation.md)
+* [References](references.md)
