@@ -94,11 +94,11 @@ You can change render quality to your preference by setting the `-qh` parameter:
 
 |Parameter|Resolution|Frames per second|
 |-----|----------|-|
-|`-ql`| 854x480 | `15fps` |
-|`-qm`| 1280x720 | `30fps` |
-|`-qh`| 1920x1080 | `60fps` |
-|`-qp`| 2560x1440 | `60fps` |
-|`-qk`| 3840x2160 | `60fps` |
+|`-ql`| 854 x 480 | `15` |
+|`-qm`| 1280 x 720 | `30` |
+|`-qh`| 1920 x 1080 | `60` |
+|`-qp`| 2560 x 1440 | `60` |
+|`-qk`| 3840 x 2160 | `60` |
 
 Increase fps for smoother animation.
 
