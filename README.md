@@ -4,6 +4,11 @@ This repository provides an interactive **sequence transformation visualizer** b
 
 ---
 
+## Documentation
+
+Full documentation is available on [GitBook](https://ahmed-kamal.gitbook.io/bioinformatics-algorithms-using-manin)
+
+---
 ## ✨ Features
 
 - **Interactive Input**:
