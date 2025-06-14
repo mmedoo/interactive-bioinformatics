@@ -117,8 +117,9 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		temp.append(line)
 		linesMap[tuple(st_point)] = line
 		linesMap[tuple(ed_point)] = line
+		self.play(Create(line), run_time=run_time)
 
-	self.play(*[Create(line) for line in temp], run_time=run_time)
+	# self.play(*[Create(line) for line in temp], run_time=run_time)
 
 	step_mobs += temp
 
