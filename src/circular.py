@@ -39,11 +39,20 @@ def count_cycles(permutation):
 
 
 def addCircleToTheSide(self, step, order):
+	if not self.running:
+		self.running = True
+		return;
+
 	origin = VGroup(*[mob.copy() for mob in step])
 	scale_down = 0.4
 	gap = scale_down*r*10
 	newStep = origin.copy().scale(scale_down).to_edge(DOWN + LEFT * (gap * order + 1), buff=0.25)
 	self.add(origin)
+
+	if not self.running:
+		self.running = True
+		return;
+
 	self.play(
 		Transform(
 			origin,
@@ -68,6 +77,10 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 	endsMap: dict[str, Point3DLike] = {}
 	
 	step_mobs: Sequence[Mobject] = []
+	
+	if not self.running:
+		self.running = True
+		return;
 
 	for j in range(n):
 		st_angle = begin_angle + j * (block_angle + gap_angle) * dir
@@ -87,6 +100,10 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		startsMap[Target[j]] = st_point
 		endsMap[Target[j]] = ed_point
 
+		if not self.running:
+			self.running = True
+			return;
+
 		self.play(
 			FadeIn(st_dot),
 			FadeIn(ed_dot),
@@ -103,6 +120,11 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		line = ArcBetweenPoints(st_point, ed_point, radius=r * dir, color=target_lines_color)
 		temp.append(line)
 
+	if not self.running:
+		self.running = True
+		return;
+		
+
 	self.play(*[Create(line) for line in temp], run_time=run_time)
 
 	step_mobs += temp
@@ -117,6 +139,9 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		temp.append(line)
 		linesMap[tuple(st_point)] = line
 		linesMap[tuple(ed_point)] = line
+		if not self.running:
+			self.running = True
+			return;
 		self.play(Create(line), run_time=run_time)
 
 	# self.play(*[Create(line) for line in temp], run_time=run_time)
@@ -156,6 +181,10 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 
 		newLine1.set_color(initial_lines_color)
 		newLine2.set_color(initial_lines_color)
+
+		if not self.running:
+			self.running = True
+			return;
 
 		self.play(
 			Transform(line1, newLine1),

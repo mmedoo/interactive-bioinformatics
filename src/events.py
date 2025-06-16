@@ -13,6 +13,9 @@ def handleMouseMotion(self, point: Point3D, d_point):
 	watch_mouse_motion(point, self.buttons)
 
 def handleKeyPress(self, symbol, modifiers):
+
+	print(f"Key pressed: {check_if_char(symbol)}")
+
 	if not self.accept_input:
 		return
 	

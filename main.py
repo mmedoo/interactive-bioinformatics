@@ -19,6 +19,8 @@ class Run(Scene):
 	temp_input_mobject: Text = Text("")
 	message_to_user: Text = Text("")
 
+	running: bool = True
+
 	max_input_len: int = 10
 	current_stage: int = 0
 	
@@ -59,6 +61,7 @@ class Run(Scene):
 		self.current_stage += 1
 	
 	def resetAll(self):
+		self.running = False
 		self.clear()
 		self.buttons = []
 		self.current_stage = 0
@@ -74,6 +77,7 @@ class Run(Scene):
 		self.play_next_stage()
 
 	def resetAndKeepSeqs(self):
+		self.running = False
 		self.buttons = []
 		self.clear()
 		self.labels_mobjects = []

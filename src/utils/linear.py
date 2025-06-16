@@ -54,9 +54,14 @@ def getBreakPointsIndices(seq: list, target: list) -> list[int]:
 	return indices
 
 def addStepToTheSide(self, step, order):
+	if not self.running: return;
+
 	origin = VGroup(*[mob.copy() for mob in step])
 	newStep = origin.copy().scale(0.5).to_edge(RIGHT + DOWN * (order + 1),buff=0.5)
 	self.add(origin)
+
+	if not self.running: return;
+	
 	self.play(
 		Transform(
 			origin,

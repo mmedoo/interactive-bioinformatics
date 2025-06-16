@@ -27,6 +27,10 @@ def runBps(self, init, target):
 	# init = [int(x) for x in init]
 	# target = [int(x) for x in target]
 
+	if not self.running:
+		self.running = True
+		return;
+
 	operations_count = 0
 
 	init_current = init.copy()
@@ -42,6 +46,10 @@ def runBps(self, init, target):
 	
 	step_text[0].set_color(GREY)
 	step_text[-1].set_color(GREY)
+	
+	if not self.running:
+		self.running = True
+		return;
 
 	self.play(*[Write(text) for text in step_text], run_time=run_time)
 
@@ -63,6 +71,9 @@ def runBps(self, init, target):
 		updated_text[0].set_color(GREY)
 		updated_text[-1].set_color(GREY)
 		
+		if not self.running:
+			return;
+
 		self.play(
 			*[
 				Transform(step_text[j], updated_text[j])
@@ -89,6 +100,8 @@ def runBps(self, init, target):
 		bps_indices = Find_Breakpoints(init_current, target)
 
 		if len(bps_indices) == 0:
+			if not self.running:
+				return;
 			update_bps_number(len(bps_indices))
 			return	
 
@@ -114,7 +127,14 @@ def runBps(self, init, target):
 			markers.append(marker)
 			self.makeClickable(marker, lambda x, idx=index: fixMarker(x, idx))
 
+		if not self.running:
+			return;
+
 		self.play(*[Write(m) for m in markers], run_time=run_time)
+		
+		if not self.running:
+			return;
+
 		update_bps_number(len(bps_indices))
 
 	def update_bps_number(no):
