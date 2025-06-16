@@ -82,7 +82,12 @@ def runBps(self, init, target):
 			run_time=run_time
 		)
 
+		if not self.running:
+			return;
+
 		for m in markers:
+			if not self.running:
+				return;
 			self.buttons.remove(m)
 			self.remove(m)
 
