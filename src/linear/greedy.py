@@ -17,7 +17,6 @@ def runGreedy(self, init: list, target: list):
 	step_text = getSeqObjects(init_current, ORIGIN).to_edge(LEFT, buff=1)
 
 	if not self.running:
-		self.running = True
 		return;
 
 	self.play(*[Write(text) for text in step_text], run_time=run_time)
@@ -27,7 +26,6 @@ def runGreedy(self, init: list, target: list):
 	while init_current != target and self.running:
 		
 		if not self.running:
-			self.running = True
 			return;
 
 		if target[i] == init_current[i]:
@@ -41,7 +39,6 @@ def runGreedy(self, init: list, target: list):
 		start_mark, end_mark = putMarkOnRange(step_text, i, target_index)
 
 		if not self.running:
-			self.running = True
 			return;
 
 		self.play(
@@ -61,7 +58,6 @@ def runGreedy(self, init: list, target: list):
 		start_mark.set_color(GREY)
 
 		if not self.running:
-			self.running = True
 			return;
 
 		self.play(
@@ -88,6 +84,5 @@ def runGreedy(self, init: list, target: list):
 	operations_text = Text(f"Operations: {operations_count}", font_size=46).to_edge(LEFT + DOWN)
 
 	if not self.running:
-		self.running = True
 		return;
 	self.play(Write(operations_text), run_time=run_time)

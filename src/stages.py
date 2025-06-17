@@ -84,13 +84,18 @@ def stage_3(self):
 			*[label for label, _ in buttons],
 			*[box for _, box in buttons]
 		)
+	
+	def enableAnimation():
+		self.running = True
 
 	self.makeClickable(linearBox, lambda x: (
 		removeOptions(),
+		enableAnimation(),
 		runLinear(self, self.input_history[0], self.input_history[1])
 	))
 	self.makeClickable(circularBox, lambda x: (
 		removeOptions(),
+		enableAnimation(),
 		runCircular(self, self.input_history[0], self.input_history[1])
 	))
 

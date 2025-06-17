@@ -40,7 +40,6 @@ def count_cycles(permutation):
 
 def addCircleToTheSide(self, step, order):
 	if not self.running:
-		self.running = True
 		return;
 
 	origin = VGroup(*[mob.copy() for mob in step])
@@ -50,7 +49,6 @@ def addCircleToTheSide(self, step, order):
 	self.add(origin)
 
 	if not self.running:
-		self.running = True
 		return;
 
 	self.play(
@@ -79,7 +77,6 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 	step_mobs: Sequence[Mobject] = []
 	
 	if not self.running:
-		self.running = True
 		return;
 
 	for j in range(n):
@@ -101,7 +98,7 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		endsMap[Target[j]] = ed_point
 
 		if not self.running:
-			self.running = True
+			
 			return;
 
 		self.play(
@@ -121,7 +118,6 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		temp.append(line)
 
 	if not self.running:
-		self.running = True
 		return;
 		
 
@@ -140,7 +136,7 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		linesMap[tuple(st_point)] = line
 		linesMap[tuple(ed_point)] = line
 		if not self.running:
-			self.running = True
+			
 			return;
 		self.play(Create(line), run_time=run_time)
 
@@ -183,7 +179,7 @@ def runCircular(self, Initial: list[str], Target: list[str]):
 		newLine2.set_color(initial_lines_color)
 
 		if not self.running:
-			self.running = True
+			
 			return;
 
 		self.play(

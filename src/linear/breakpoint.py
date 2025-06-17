@@ -28,7 +28,6 @@ def runBps(self, init, target):
 	# target = [int(x) for x in target]
 
 	if not self.running:
-		self.running = True
 		return;
 
 	operations_count = 0
@@ -47,9 +46,7 @@ def runBps(self, init, target):
 	step_text[0].set_color(GREY)
 	step_text[-1].set_color(GREY)
 	
-	if not self.running:
-		self.running = True
-		return;
+	if not self.running: return;
 
 	self.play(*[Write(text) for text in step_text], run_time=run_time)
 
@@ -71,8 +68,7 @@ def runBps(self, init, target):
 		updated_text[0].set_color(GREY)
 		updated_text[-1].set_color(GREY)
 		
-		if not self.running:
-			return;
+		if not self.running: return;
 
 		self.play(
 			*[
@@ -82,12 +78,10 @@ def runBps(self, init, target):
 			run_time=run_time
 		)
 
-		if not self.running:
-			return;
+		if not self.running: return;
 
 		for m in markers:
-			if not self.running:
-				return;
+			if not self.running: return;
 			self.buttons.remove(m)
 			self.remove(m)
 
@@ -132,19 +126,18 @@ def runBps(self, init, target):
 			markers.append(marker)
 			self.makeClickable(marker, lambda x, idx=index: fixMarker(x, idx))
 
-		if not self.running:
-			return;
+		if not self.running: return;
 
 		self.play(*[Write(m) for m in markers], run_time=run_time)
 		
-		if not self.running:
-			return;
+		if not self.running: return;
 
 		update_bps_number(len(bps_indices))
 
 	def update_bps_number(no):
 		nonlocal bps_no
 		bps_no_text = Text(f"Breaks: {no}", font_size=46).to_edge(DOWN + LEFT, buff=0.5)
+		if not self.running: return;
 		if bps_no is not None:
 			# self.play(Transform(bps_no, bps_no_text), run_time=0.5)
 			self.remove(bps_no)
